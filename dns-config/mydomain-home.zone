@@ -1,0 +1,17 @@
+$TTL 2d
+
+$ORIGIN mydomain.home.
+
+@               IN      SOA     ns.mydomain.home. info.mydomain.home. (
+                                2024072600      ; serial
+                                12h             ; refresh
+                                15m             ; retry
+                                3w              ; expire
+                                2h              ; minimum ttl
+                                )
+                
+                IN      NS      ns.mydomain.home.
+
+ns              IN      A       127.0.0.1
+
+example         IN      A       127.0.0.1

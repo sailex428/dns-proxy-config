@@ -1,0 +1,30 @@
+version: '3.8'
+name: dns_proxy
+
+services:
+  bind9:
+    container_name: dns
+    image: ubuntu/bind9:latest
+    environment:
+      - BIND9_USER=root
+      - TZ=Europe/Berlin
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+    volumes:
+      - ./dns-config:/etc/bind
+      - ./dns-cache:/var/cache/bind
+      - ./dns-records:/var/lib/bind
+    restart: unless-stopped
+  nginx:
+    container_name: nginx-proxy
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-config:/etc/nginx
+      - ./nginx-config/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - bind9
+    restart: unless-stopped
+  
